@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
-import bcrypt from "bcryptjs";
 
 export default function Registration() {
   const [name, setName] = useState("");
@@ -36,18 +35,18 @@ export default function Registration() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    const hashedPassword = bcrypt.hashSync(password, 10);
     try {
       await axios
-        .post("http://localhost:8080/registration", {
+        .post("/registration", {
           name: name,
           company: company,
           email: email,
+          password: hashedPassword,
         })
         .then(navigate("/items"));
-      await axios.post("http://localhost:8080/login", {
+      await axios.post("/login", {
         email: email,
-        password: hashedPassword,
+        password: password,
       });
       alert("Registration Success!");
     } catch (err) {
@@ -57,7 +56,7 @@ export default function Registration() {
 
   return (
     <div id="registration-page">
-      <h1 class="text-center">Register</h1>
+      <h1 className="text-center">Register</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formName" className="m-5">
           <Form.Label>Name: </Form.Label>

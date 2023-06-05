@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
@@ -12,21 +12,21 @@ export default function Login() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/submit", {
+      const response = await axios.post("/submit", {
         email: email,
         password: password,
       });
 
-      if (response.status === 200) {
-        navigate("/items");
-      }
-    } catch (err) {
-      if (err.response && err.response.status === 401) {
-        alert("Login failed. Please check your email and password.");
-      } else {
-        alert("An error occurred. Please try again later.");
-      }
-    }
+          if (response.status === 200) {
+            navigate("/items");
+          }
+        } catch (err) {
+          if (err.response && err.response.status === 401) {
+             alert("Login failed. Please check your email and password.");
+             } else {
+             alert("An error occurred. Please try again later.");
+            }
+        }
   }
 
   return (
